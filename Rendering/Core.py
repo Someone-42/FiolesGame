@@ -1,5 +1,9 @@
 import math
 
+def clamp(value, min_value, max_value):
+    """ Returns 'value' between 'min_value' and 'max_value'"""
+    return min(max(min_value, value), max_value)
+
 class Vector2:
     """Representation of a 2D vector"""
     __slots__=("x", "y")
@@ -117,3 +121,38 @@ class Vector2:
     def to_tuple(self):
         """ Returns the vector as a tuple """
         return (self.x, self.y)
+
+class Color:
+    """ Simple color struct with, r=Red g=Green b=Blue a=Alpha"""
+    __slots__=("r", "g" ,"b", "a")
+    def __init__(self, r=128, g=128, b=128, a=255):
+        self.r = 1 * int(clamp(r, 0, 255))
+        self.g = int(clamp(g, 0, 255))
+        self.b = int(clamp(b, 0, 255))
+        self.a = int(clamp(a, 0, 255))
+
+    def clamp_to_rgba_uint8(self):
+        """ Clamps all the value to unsigned int 8bits (from 0 to 255) """
+        self = Color.sttc_clamp_to_rgba_uint8(self)
+
+    @staticmethod
+    def sttc_clamp_to_rgba_uint8(color):
+        """ Returns a Color() object with all the values clamped to unsigned int 8bits (from 0 to 255) """
+        return Color(color.r, color.g, color.b, color.a)
+
+    def __mul__(self, other):
+        col = self.copy()
+        col.r *= other
+        col.g *= other
+        col.b *= other
+        return Color.sttc_clamp_to_rgba_uint8(col)
+
+    def copy(self):
+        """ Returns a copy of itself """
+        return Color(self.r, self.g, self.b, self.a)
+
+    def to_tuple_rgb(self):
+        return (self.r, self.g, self.b)
+
+    def to_tuple_rgba(self):
+        return (self.r, self.g, self.b, self.a)
