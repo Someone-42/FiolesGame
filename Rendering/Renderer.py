@@ -19,11 +19,15 @@ def __ss_to_sc(v: Vector2) -> Vector2:
     """ Returns Screen Space tuple to Screen Coordinates """
     return v.mul_comp(__WINDOW_SIZE)
 
-def init(render_settings):
+def init():
     """ Initializes the renderer. Not initializing will cause bugs or crashes """
+    g.affiche_auto_off()
+
+def load(render_settings):
+    """ Loads settings and themes, calling it again will change the settings """
     global __RENDER_SETTINGS
     __RENDER_SETTINGS = render_settings
-    g.affiche_auto_off()
+    _bake()
 
 def create_window(width, height, title = "A window"):
     global __WINDOW_SIZE
@@ -31,19 +35,22 @@ def create_window(width, height, title = "A window"):
     g.init_fenetre(width, height, title)
     clear()
 
+def _bake():
+    """ Bakes rendering to simplify render step """
+    # Get optimal size to render all
+    #    and store their bounding box, with the colors bouding boxes
+
 def clear():
-    g.remplir_fenetre(__RENDER_SETTINGS.clear_color)
+    g.remplir_fenetre(__RENDER_SETTINGS.clear_color.to_tuple_rgb())
 
 def render():
     g.affiche_tout()
 
 def render_vials(vials):
-    # Get optimal size to render all
     # Then iterate over them
     # Get vial render size
     # Render using default parameters
     pass
-
 def get_click() -> tuple:
     """ Returns a tuple in screen space """
     pass
