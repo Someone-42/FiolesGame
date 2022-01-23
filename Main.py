@@ -4,6 +4,7 @@ from UI import*
 game = Game()
 
 def run():
+    start()
     while not game.finished():
         display_game(game)
         (i1, i2) = wait_for_move()
