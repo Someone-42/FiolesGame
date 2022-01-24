@@ -4,8 +4,8 @@ import Rendering.Core as core
 
 def start(width, height, title = "A window"):
     r.init()
-    r.load(rs.RenderSettings(6, 0.15, 0.7, core.Color(42, 42, 42)))
     r.create_window(width, height, title)
+    r.load(rs.RenderSettings(6, 0.05, 0.7, core.Color(42, 42, 42)))
 
 def display_game(game):
     r.clear()
