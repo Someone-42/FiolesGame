@@ -46,10 +46,12 @@ def _bake():
     v = 1 - sf
     x = v * c1
     xx = sf * c1
-    xxh = xx / 2
-    for i in range(0, 6, __RENDER_SETTINGS.vial_per_row):
+    hmmm = ((xx / (__RENDER_SETTINGS.vial_per_row - 1)) / 2)
+    x = x+hmmm
+    xx = xx + hmmm
+    for i in range(0, 5, __RENDER_SETTINGS.vial_per_row):
         for j in range(0, __RENDER_SETTINGS.vial_per_row):
-            k = (x + xx) * j + m.x + xxh
+            k = (x + xx) * j + m.x
             __BOUNDING_BOXES.append((k, k + x))
 
     # Get optimal size to render all
@@ -67,6 +69,7 @@ def render_vials(vials):
     # Render using default parameters
     for bb in __BOUNDING_BOXES:
         g.affiche_rectangle_plein((bb[0], 0), (bb[1], __WINDOW_SIZE.y), (0, 255, 0))
+        print(Vector2(bb[0], bb[1]).to_tuple())
 
 def get_click() -> tuple:
     """ Returns a tuple in screen space """
