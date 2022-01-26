@@ -156,3 +156,17 @@ class Color:
 
     def to_tuple_rgba(self):
         return (self.r, self.g, self.b, self.a)
+
+class Primitive:
+    """ Shape base for rendering """
+    __slots__=("color")
+    def __init__(self, color = Color()):
+        self.color = color
+
+class Rectangle2(Primitive):
+    """ 2D Rectangle primitive """
+    __slots__=("pos", "size")
+    def __init__(self, position=Vector2(), size=Vector2(), color=Color()):
+        super().__init__(color)
+        self.pos = position
+        self.size = size
