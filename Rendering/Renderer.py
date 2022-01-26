@@ -69,8 +69,8 @@ def render_vials(vials):
     # Render using default parameters
     for bb in __BOUNDING_BOXES:
         g.affiche_rectangle_plein((bb[0], 0), (bb[1], __WINDOW_SIZE.y), (0, 255, 0))
-        print(Vector2(bb[0], bb[1]).to_tuple())
+        print((Vector2(bb[0], bb[1]) / __WINDOW_SIZE.x).to_tuple())
 
 def get_click() -> tuple:
-    """ Returns a tuple in screen space """
-    pass
+    """ Returns a tuple in screen coordinates """
+    return g.wait_clic()
