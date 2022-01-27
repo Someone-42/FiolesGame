@@ -1,6 +1,6 @@
 #### Default Game Renderer ####
 import Rendering.graphics as g
-from Rendering.Core import Vector2
+from Rendering.Core import *
 """
 
 Screen Space : Coordinates on screen from 0 to 1
@@ -53,6 +53,14 @@ def _bake():
         for j in range(0, __RENDER_SETTINGS.vial_per_row):
             k = (x + xx) * j + m.x
             __BOUNDING_BOXES.append((k, k + x))
+
+    margins_px = __WINDOW_SIZE * __RENDER_SETTINGS.margin_size
+    ui_rect_px = Rectangle2(
+        __RENDER_SETTINGS.ui_rect.pos.mul_comp(__WINDOW_SIZE),
+        __RENDER_SETTINGS.ui_rect.size.mul_comp(__WINDOW_SIZE))
+    vials_rect_px = Rectangle2(
+        __RENDER_SETTINGS.vial_rect.pos.mul_comp(__WINDOW_SIZE),
+        __RENDER_SETTINGS.vial_rect.size.mul_comp(__WINDOW_SIZE))
 
     # Get optimal size to render all
     #    and store their bounding box, with the colors bouding boxes
