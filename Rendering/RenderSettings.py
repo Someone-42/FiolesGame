@@ -8,7 +8,7 @@ class RenderSettings:
         "vial_spacing",
         "row_spacing"
         )
-    def __init__(self, vial_per_row = 6, margin_size = 0.05, vial_spacing = 0.6, row_spacing = 0.5, clear_color=core.Color(0, 0, 0)):
+    def __init__(self, vial_per_row = 6, margin_size = 0.05, vial_spacing = 0.6, row_spacing = 0.5, ui_rect = core.Rectangle2(Vector2(0, 0), Vector2(1, 0.15)), clear_color=core.Color(0, 0, 0)):
         """ Creates a class with rendering settings for the renderer to use - margin_size has to be in screen space (from 0 to 1) - vial_spacing is a fraction of a vial_size.x """
         self.clear_color = clear_color
         self.vial_per_row = vial_per_row
