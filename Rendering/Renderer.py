@@ -13,6 +13,11 @@ __WINDOW_SIZE = None
 
 __BOUNDING_BOXES = []
 
+__VIAL_RECT_PX = None
+__UI_RECT_PX = None
+__VIAL_SIZE_X_PX = -1
+__VIAL_SPACING_X_PX = -1
+
 def __sc_to_ss(v: Vector2) -> Vector2:
     """ Returns Screen Coordinates vector to Screen Space """
     return v.div_comp(__WINDOW_SIZE)
@@ -61,6 +66,19 @@ def _bake():
     vials_rect_px = Rectangle2(
         __RENDER_SETTINGS.vial_rect.pos.mul_comp(__WINDOW_SIZE),
         __RENDER_SETTINGS.vial_rect.size.mul_comp(__WINDOW_SIZE))
+
+    global __VIAL_RECT_PX, __UI_RECT_PX
+    __VIAL_RECT_PX = vials_rect_px
+    __UI_RECT_PX = ui_rect_px
+
+    # Vial size bake
+    vial_max_size_x_px = vials_rect_px.size.x / __RENDER_SETTINGS.vial_per_row # We only calculate the size on the x axis, as the y axis size will depend on how many vials there are
+    vial_spacing_x_px = __WINDOW_SIZE.x * (__RENDER_SETTINGS.vial_spacing / 2)
+    vial_size_x_px = vial_max_size_x_px - vial_spacing_x_px + (vial_spacing_x_px / __RENDER_SETTINGS.vials_per_row)
+    
+    global __VIAL_SIZE_X_PX, __VIAL_SPACING_X_PX
+    __VIAL_SPACING_X_PX = vial_spacing_x_px
+    __VIAL_SIZE_X_PX = vial_size_x_px
 
     # Get optimal size to render all
     #    and store their bounding box, with the colors bouding boxes
