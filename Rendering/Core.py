@@ -102,7 +102,7 @@ class Vector2:
         return Vector2(self.min_comp(), self.max_comp())
 
     @staticmethod
-    def scaler(n):
+    def scalar(n):
         """ Returns a vector with n as components : Vector2(n, n) """
         return Vector2(1, 1) * n
 
