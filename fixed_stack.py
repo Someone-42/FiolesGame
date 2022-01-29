@@ -11,4 +11,12 @@ class Fixedstack:
         self.item[self.top_element] = element
         self.top_element += 1
 
+    def pop(self):
+        """pop top element of the stack"""
+        assert self.top_element >= 0, "you cant pop an empty list"
+        value = self.item[self.top_element] 
+        self.top_element -= 1
+        return value
+
+
 
