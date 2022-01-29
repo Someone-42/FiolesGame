@@ -10,6 +10,7 @@ def start(width, height, title = "A window"):
 def display_game(game):
     r.clear()
     r.render_vials(game.vials)
+    r.render_UI()
     r.render()
 
 def wait_for_move() -> tuple:
