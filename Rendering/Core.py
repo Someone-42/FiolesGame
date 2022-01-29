@@ -170,3 +170,7 @@ class Rectangle2(Primitive):
         super().__init__(color)
         self.pos = position
         self.size = size
+
+    def get_as_points(self):
+        """ Returns the rectangle as a tuple of 2 vectors, 2 vectors being the points defining it"""
+        return (self.pos.copy(), self.pos + self.size)
