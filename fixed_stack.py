@@ -18,5 +18,8 @@ class Fixedstack:
         self.top_element -= 1
         return value
 
-
+    def peek(self):
+        "peek the top element in the stack"
+        assert self.top_element >= 0, "There is no element in this stack"
+        return self.item[self.top_element]
 
