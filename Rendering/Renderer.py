@@ -79,15 +79,27 @@ def render_vials(vials):
     # Render using default parameters
     g.affiche_rectangle_plein(__VIAL_RECT_PX.pos.to_tuple(), (__VIAL_RECT_PX.pos + __VIAL_RECT_PX.size).to_tuple(), (0, 200, 0)) # Layout debug
 
-    for vi, vial in enumerate(vials):
-        i = vi % __RENDER_SETTINGS.vials_per_row
-        v_pos_x = i * (__VIAL_SIZE_X_PX + __VIAL_SPACING_X_PX) + __VIAL_RECT_PX.pos.x
-        p1, p2 = __VIAL_RECT_PX.get_as_points()
-        g.affiche_rectangle(
-            (v_pos_x, p1.y),
-            (v_pos_x + __VIAL_SIZE_X_PX, p2.y),
-            (0, 0, 255), 8) # Dummy rendering color
+    rows = ((len(vials) - 1) // (__RENDER_SETTINGS.vials_per_row)) + 1
+    # Calculating y sizes and values
+    vial_max_size_y_px = __VIAL_RECT_PX.size.y / rows
+    vial_spacing_y_px = vial_max_size_y_px * (__RENDER_SETTINGS.vial_spacing / 2)
+    vial_size_y_px = vial_max_size_y_px - vial_spacing_y_px + (vial_spacing_y_px / rows)
 
+    for vi, vial in enumerate(vials):
+        xi = vi % __RENDER_SETTINGS.vials_per_row # Getting the column or x position
+        yi = rows - 1 - (vi // __RENDER_SETTINGS.vials_per_row) # Reversing so we fill up from the top
+        vial_rect = Rectangle2(
+            Vector2(
+                xi * (__VIAL_SIZE_X_PX + __VIAL_SPACING_X_PX) + __VIAL_RECT_PX.pos.x,
+                yi * (vial_size_y_px + vial_spacing_y_px) + __VIAL_RECT_PX.pos.y),
+            Vector2(
+                __VIAL_SIZE_X_PX,
+                vial_size_y_px))
+                
+        g.affiche_rectangle( # Debug rectangle
+            vial_rect.pos.to_tuple(),
+            (vial_rect.pos + vial_rect.size).to_tuple(),
+            (0, 0, 255), 8) # Dummy rendering color
 
 def get_click() -> tuple:
     """ Returns a tuple in screen coordinates """
