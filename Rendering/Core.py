@@ -171,6 +171,15 @@ class Rectangle2(Primitive):
         self.pos = position
         self.size = size
 
-    def get_as_points(self):
+    def get_points2(self):
         """ Returns the rectangle as a tuple of 2 vectors, 2 vectors being the points defining it"""
-        return (self.pos.copy(), self.pos + self.size)
+        return (
+            self.pos.copy(), 
+            self.pos + self.size)
+
+    def get_points4(self):
+        return (
+            self.pos.copy(), 
+            self.pos + Vector2(self.size.x, 0), 
+            self.pos + self.size,
+            self.pos + Vector2(0, self.size.y))
