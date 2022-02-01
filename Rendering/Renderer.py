@@ -13,8 +13,8 @@ __WINDOW_SIZE = None
 
 __VIAL_RECT_PX = None
 __UI_RECT_PX = None
-__VIAL_SIZE_X_PX = -1
-__VIAL_SPACING_X_PX = -1
+
+__VIAL_RECTS = []
 
 def __sc_to_ss(v: Vector2) -> Vector2:
     """ Returns Screen Coordinates vector to Screen Space """
@@ -28,11 +28,14 @@ def init():
     """ Initializes the renderer. Not initializing will cause bugs or crashes """
     g.affiche_auto_off()
 
-def load(render_settings):
+def load_settings(render_settings):
     """ Loads settings and themes, calling it again will change the settings """
     global __RENDER_SETTINGS
     __RENDER_SETTINGS = render_settings
     _bake()
+
+def load_game(vials_count):
+    _bake_vials_rect(vials_count)
 
 def create_window(width, height, title = "A window"):
     global __WINDOW_SIZE
@@ -52,17 +55,29 @@ def _bake():
     __VIAL_RECT_PX = vials_rect_px
     __UI_RECT_PX = ui_rect_px
 
-    # Vial size bake
-    vial_max_size_x_px = vials_rect_px.size.x / __RENDER_SETTINGS.vials_per_row # We only calculate the size on the x axis, as the y axis size will depend on how many vials there are
+def _bake_vials_rect(vials_count):
+    vial_max_size_x_px = __VIAL_RECT_PX.size.x / __RENDER_SETTINGS.vials_per_row # We only calculate the size on the x axis, as the y axis size will depend on how many vials there are
     vial_spacing_x_px = vial_max_size_x_px * (__RENDER_SETTINGS.vial_spacing / 2)
     vial_size_x_px = vial_max_size_x_px - vial_spacing_x_px + (vial_spacing_x_px / __RENDER_SETTINGS.vials_per_row)
-    
-    global __VIAL_SIZE_X_PX, __VIAL_SPACING_X_PX
-    __VIAL_SPACING_X_PX = vial_spacing_x_px
-    __VIAL_SIZE_X_PX = vial_size_x_px
 
-    # Get optimal size to render all
-    #    and store their bounding box, with the colors bouding boxes
+    rows = ((vials_count - 1) // (__RENDER_SETTINGS.vials_per_row)) + 1
+    # Calculating y sizes and values
+    vial_max_size_y_px = __VIAL_RECT_PX.size.y / rows
+    vial_spacing_y_px = vial_max_size_y_px * (__RENDER_SETTINGS.vial_spacing / 2)
+    vial_size_y_px = vial_max_size_y_px - vial_spacing_y_px + (vial_spacing_y_px / rows)
+
+    __VIAL_RECTS.clear()
+
+    for i in range(vials_count):
+        xi = i % __RENDER_SETTINGS.vials_per_row # Getting the column or x position
+        yi = rows - 1 - (i // __RENDER_SETTINGS.vials_per_row) # Reversing so we fill up from the top
+        __VIAL_RECTS.append(Rectangle2(
+            Vector2(
+                xi * (vial_size_x_px + vial_spacing_x_px) + __VIAL_RECT_PX.pos.x,
+                yi * (vial_size_y_px + vial_spacing_y_px) + __VIAL_RECT_PX.pos.y),
+            Vector2(
+                vial_size_x_px,
+                vial_size_y_px)))
 
 def clear():
     g.remplir_fenetre(__RENDER_SETTINGS.clear_color.to_tuple_rgb())
@@ -79,23 +94,8 @@ def render_vials(vials):
     # Render using default parameters
     g.affiche_rectangle_plein(__VIAL_RECT_PX.pos.to_tuple(), (__VIAL_RECT_PX.pos + __VIAL_RECT_PX.size).to_tuple(), (0, 200, 0)) # Layout debug
 
-    rows = ((len(vials) - 1) // (__RENDER_SETTINGS.vials_per_row)) + 1
-    # Calculating y sizes and values
-    vial_max_size_y_px = __VIAL_RECT_PX.size.y / rows
-    vial_spacing_y_px = vial_max_size_y_px * (__RENDER_SETTINGS.vial_spacing / 2)
-    vial_size_y_px = vial_max_size_y_px - vial_spacing_y_px + (vial_spacing_y_px / rows)
-
     for vi, vial in enumerate(vials):
-        xi = vi % __RENDER_SETTINGS.vials_per_row # Getting the column or x position
-        yi = rows - 1 - (vi // __RENDER_SETTINGS.vials_per_row) # Reversing so we fill up from the top
-        vial_rect = Rectangle2(
-            Vector2(
-                xi * (__VIAL_SIZE_X_PX + __VIAL_SPACING_X_PX) + __VIAL_RECT_PX.pos.x,
-                yi * (vial_size_y_px + vial_spacing_y_px) + __VIAL_RECT_PX.pos.y),
-            Vector2(
-                __VIAL_SIZE_X_PX,
-                vial_size_y_px))
-                
+        vial_rect = __VIAL_RECTS[vi]
         g.affiche_rectangle( # Debug rectangle
             vial_rect.pos.to_tuple(),
             (vial_rect.pos + vial_rect.size).to_tuple(),
