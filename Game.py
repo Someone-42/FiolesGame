@@ -12,7 +12,7 @@ class Game:
         return False
 
     def is_finished(self):
-        i = 1
+        i = 0
         while self.vials[i].est_complete() or self.vials[i].est_vide():
             i += 1
             return True
