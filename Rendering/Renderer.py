@@ -1,6 +1,7 @@
 #### Default Game Renderer ####
 import Rendering.graphics as g
 from Rendering.Core import *
+
 """
 
 Screen Space : Coordinates on screen from 0 to 1
@@ -12,6 +13,7 @@ __RENDER_SETTINGS = None
 __WINDOW_SIZE = None
 
 __VIAL_COUNT = None
+__SELECTED_VIAL_INDEX = None
 
 __VIAL_RECT_PX = None
 __UI_RECT_PX = None
@@ -102,11 +104,47 @@ def render_vials(vials):
 
     for vi, vial in enumerate(vials):
         vial_rect = __VIAL_RECTS[vi]
+        if __SELECTED_VIAL_INDEX == vi:
+            # Show it is selected
+            g.affiche_rectangle_plein( # Debug rectangle
+                vial_rect.pos.to_tuple(),
+                (vial_rect.pos + vial_rect.size).to_tuple(),
+                (0, 0, 255), 8) # Dummy rendering color
+            continue
         g.affiche_rectangle( # Debug rectangle
             vial_rect.pos.to_tuple(),
             (vial_rect.pos + vial_rect.size).to_tuple(),
             (0, 0, 255), 8) # Dummy rendering color
 
-def get_click() -> tuple:
-    """ Returns a tuple in screen coordinates """
-    return g.wait_clic()
+def render_all(vials):
+    clear()
+    render_UI()
+    render_vials(vials)
+    render()
+
+def poll_inputs(vials) -> tuple:
+    """ Returns the treated input from a click or other user input """
+    global __SELECTED_VIAL_INDEX
+
+    while True: # Continue asking for input till we get an input can be returned
+        _x, _y = g.wait_clic()
+        click = Vector2(_x, _y)
+
+        if __VIAL_RECT_PX.is_point_inside(click):
+            index = None
+            for i, vial in enumerate(__VIAL_RECTS):
+                if vial.is_point_inside(click):
+                    index = i
+                    break
+                
+            if __SELECTED_VIAL_INDEX is None:
+                __SELECTED_VIAL_INDEX = index
+            else:
+                if __SELECTED_VIAL_INDEX == index:
+                    __SELECTED_VIAL_INDEX = None
+                else:
+                    return (InputType.MOVE, __SELECTED_VIAL_INDEX, index)
+            render_all(vials)
+        elif __UI_RECT_PX.is_point_inside(click):
+            # Go over every button in the UI rect and return which action was pressed
+            pass

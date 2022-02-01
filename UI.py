@@ -23,5 +23,5 @@ def display_game(game):
     r.render_UI()
     r.render()
 
-def poll_input() -> tuple:
-    pass
+def poll_input(game) -> tuple:
+    r.poll_inputs(game.vials)

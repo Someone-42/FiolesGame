@@ -1,4 +1,5 @@
 import math
+from enum import Enum
 
 def clamp(value, min_value, max_value):
     """ Returns 'value' between 'min_value' and 'max_value'"""
@@ -197,3 +198,7 @@ class Rectangle2(Primitive):
                 point.x <= max_x and \
                 point.y >= min_y and \
                 point.y <= max_y
+
+class InputType(Enum):
+    GO_BACK = -1
+    MOVE = 0
