@@ -163,6 +163,9 @@ class Primitive:
     def __init__(self, color = Color()):
         self.color = color
 
+    def is_point_inside(self, point: Vector2) -> bool:
+        return False
+
 class Rectangle2(Primitive):
     """ 2D Rectangle primitive """
     __slots__=("pos", "size")
@@ -172,14 +175,25 @@ class Rectangle2(Primitive):
         self.size = size
 
     def get_points2(self):
-        """ Returns the rectangle as a tuple of 2 vectors, 2 vectors being the points defining it"""
+        """ Returns the rectangle as a tuple of 2 vectors, 2 vectors being the points defining it """
         return (
             self.pos.copy(), 
             self.pos + self.size)
 
     def get_points4(self):
+        """ Returns the rectangle as a tuple of 4 vectors, 4 vectors being the points defining it """
         return (
             self.pos.copy(), 
             self.pos + Vector2(self.size.x, 0), 
             self.pos + self.size,
             self.pos + Vector2(0, self.size.y))
+
+        def is_point_inside(self, point: Vector2):
+            p1, p2 = self.get_points2()
+            min_x, max_x = (p1.x, p2.x) if p1.x < p2.x else (p2.x, p1.x)
+            min_y, max_y = (p1.y, p2.y) if p1.y < p2.y else (p2.y, p1.y)
+            return \
+                point.x >= min_x and \
+                point.x <= max_x and \
+                point.y >= min_y and \
+                point.y <= max_y
