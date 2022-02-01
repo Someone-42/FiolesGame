@@ -11,6 +11,8 @@ Screen coordinates : Coordinates on screen from 0 to Width for x and 0 to Height
 __RENDER_SETTINGS = None
 __WINDOW_SIZE = None
 
+__VIAL_COUNT = None
+
 __VIAL_RECT_PX = None
 __UI_RECT_PX = None
 
@@ -33,9 +35,13 @@ def load_settings(render_settings):
     global __RENDER_SETTINGS
     __RENDER_SETTINGS = render_settings
     _bake()
+    if __VIAL_COUNT:
+        _bake_vials_rect(__VIAL_COUNT)
 
-def load_game(vials_count):
-    _bake_vials_rect(vials_count)
+def load_game(vial_count):
+    global __VIAL_COUNT
+    __VIAL_COUNT = vial_count
+    _bake_vials_rect(vial_count)
 
 def create_window(width, height, title = "A window"):
     global __WINDOW_SIZE
@@ -55,20 +61,20 @@ def _bake():
     __VIAL_RECT_PX = vials_rect_px
     __UI_RECT_PX = ui_rect_px
 
-def _bake_vials_rect(vials_count):
+def _bake_vials_rect(vial_count):
     vial_max_size_x_px = __VIAL_RECT_PX.size.x / __RENDER_SETTINGS.vials_per_row # We only calculate the size on the x axis, as the y axis size will depend on how many vials there are
     vial_spacing_x_px = vial_max_size_x_px * (__RENDER_SETTINGS.vial_spacing / 2)
     vial_size_x_px = vial_max_size_x_px - vial_spacing_x_px + (vial_spacing_x_px / __RENDER_SETTINGS.vials_per_row)
 
-    rows = ((vials_count - 1) // (__RENDER_SETTINGS.vials_per_row)) + 1
+    rows = ((vial_count - 1) // (__RENDER_SETTINGS.vials_per_row)) + 1
     # Calculating y sizes and values
     vial_max_size_y_px = __VIAL_RECT_PX.size.y / rows
-    vial_spacing_y_px = vial_max_size_y_px * (__RENDER_SETTINGS.vial_spacing / 2)
+    vial_spacing_y_px = vial_max_size_y_px * (__RENDER_SETTINGS.row_spacing / 2)
     vial_size_y_px = vial_max_size_y_px - vial_spacing_y_px + (vial_spacing_y_px / rows)
 
     __VIAL_RECTS.clear()
 
-    for i in range(vials_count):
+    for i in range(vial_count):
         xi = i % __RENDER_SETTINGS.vials_per_row # Getting the column or x position
         yi = rows - 1 - (i // __RENDER_SETTINGS.vials_per_row) # Reversing so we fill up from the top
         __VIAL_RECTS.append(Rectangle2(

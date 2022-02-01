@@ -3,7 +3,7 @@ import Rendering.Renderer as r
 import Rendering.graphics as g
 
 if __name__ == "__main__":
-    ui.start(1150, 900, "A testing thingy")
+    ui.start(1100, 800, "A testing thingy")
     r.load_game(12)
     while g.pas_echap():
         r.clear()
