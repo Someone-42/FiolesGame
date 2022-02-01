@@ -12,9 +12,9 @@ class Game:
         return False
 
     def is_finished(self):
-        for i in self.vials:
-            if self.vials[i].est_complete() or self.vials[i].est_vide():
-                end = True
-            else:
-                end = False
-            return end
+        i = 0
+        while self.vials[i].est_complete() or self.vials[i].est_vide():
+            i += 1
+            if self.vials[-1] == self.vials[i]:
+                return True
+        return False
