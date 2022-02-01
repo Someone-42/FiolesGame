@@ -25,7 +25,7 @@ class FixedStack:
         return self.items[self.top_element]
 
 if __name__ == "__main__":
-    test = Fixedstack(3)
+    test = FixedStack(3)
     test.push(7)
     print(test.item)
     test.pop()
