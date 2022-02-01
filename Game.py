@@ -8,7 +8,7 @@ class Game:
     def try_move(self, a, b):
         if peut_deplacer_dans(a, b):
             deplacer_dans(a, b)
-            return
+            return True
         return False
 
     def is_finished(self):
