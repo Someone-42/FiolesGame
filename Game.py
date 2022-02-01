@@ -4,11 +4,10 @@ class Game:
     def __init__(self):
         self.vials = []
         self.moves = Stack()
-        
+
     def try_moving(self, a, b):
-        if self.vials[a]:
-            if len(self.vials[b]) != 3:
-                return True
+        if peut_deplacer_dans(a, b):
+            deplacer_dans(a, b)
         return False
 
     def is_finished(self):
