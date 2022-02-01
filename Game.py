@@ -15,6 +15,6 @@ class Game:
         i = 0
         while self.vials[i].est_complete() or self.vials[i].est_vide():
             i += 1
-            if i == len(self.vials):
+            if i == (len(self.vials))-1:
                 return True
         return False
