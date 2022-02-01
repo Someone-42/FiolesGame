@@ -12,4 +12,6 @@ class Game:
         return False
 
     def is_finished(self):
-        pass
+        while self.vials[i].est_complete() or self.vials[i].est_vide():
+            return True
+        return False
