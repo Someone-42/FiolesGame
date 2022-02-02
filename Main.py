@@ -9,5 +9,5 @@ def run():
         display_game(game)
         (i1, i2) = wait_for_move()
         if not game.try_move(i1, i2):
-            is_unable_to_move()
+            show_invalid_move()
         
