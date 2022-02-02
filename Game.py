@@ -6,14 +6,14 @@ class Game:
         self.moves = Stack()
 
     def try_move(self, a, b):
-        if peut_deplacer_dans(a, b):
-            deplacer_dans(a, b)
+        if self.vials.can_move_into(a, b):
+            self.vials.move_into(a, b)
             return True
         return False
 
     def is_finished(self):
         i = 0
-        while self.vials[i].est_complete() or self.vials[i].est_vide():
+        while self.vials[i].is_complete() or self.vials[i]._is_empty():
             i += 1
             if i == (len(self.vials))-1:
                 return True
