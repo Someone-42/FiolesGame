@@ -6,8 +6,8 @@ class Game:
         self.moves = Stack()
 
     def try_move(self, a, b):
-        if self.vials.can_move_into(a, b):
-            self.vials.move_into(a, b)
+        if self.vials.can_move_into(self.vials[a], self.vials[b]):
+            self.vials.move_into(self.vials[a], self.vials[b])
             return True
         return False
 
