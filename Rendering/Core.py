@@ -189,16 +189,33 @@ class Rectangle2(Primitive):
             self.pos + self.size,
             self.pos + Vector2(0, self.size.y))
 
-        def is_point_inside(self, point: Vector2):
-            p1, p2 = self.get_points2()
-            min_x, max_x = (p1.x, p2.x) if p1.x < p2.x else (p2.x, p1.x)
-            min_y, max_y = (p1.y, p2.y) if p1.y < p2.y else (p2.y, p1.y)
-            return \
-                point.x >= min_x and \
-                point.x <= max_x and \
-                point.y >= min_y and \
-                point.y <= max_y
+    def is_point_inside(self, point: Vector2):
+        p1, p2 = self.get_points2()
+        min_x, max_x = (p1.x, p2.x) if p1.x < p2.x else (p2.x, p1.x)
+        min_y, max_y = (p1.y, p2.y) if p1.y < p2.y else (p2.y, p1.y)
+        return \
+            point.x >= min_x and \
+            point.x <= max_x and \
+            point.y >= min_y and \
+            point.y <= max_y
+
+class Button:
+    __slots__=("rect", "on_click")
+    def __init__(self, rect, on_click = None):
+        self.rect = rect
+        if on_click is None:
+            self.on_click = self.default_on_click
+        else:
+            self.on_click = on_click
+
+    def is_click_on_button(self, click) -> bool:
+        """ Returns true or false if the button was clicked """
+        return rect.is_point_inside(click)
+
+    def default_on_click():
+        print("The button at", self.rect.pos, "of size", self.rect.size, "was clicked")
 
 class InputType(Enum):
     GO_BACK = -1
     MOVE = 0
+    QUIT = 1

@@ -20,6 +20,8 @@ __UI_RECT_PX = None
 
 __VIAL_RECTS = []
 
+__BUTTONS = []
+
 def __sc_to_ss(v: Vector2) -> Vector2:
     """ Returns Screen Coordinates vector to Screen Space """
     return v.div_comp(__WINDOW_SIZE)
@@ -109,7 +111,7 @@ def render_vials(vials):
             g.affiche_rectangle_plein( # Debug rectangle
                 vial_rect.pos.to_tuple(),
                 (vial_rect.pos + vial_rect.size).to_tuple(),
-                (0, 0, 255), 8) # Dummy rendering color
+                (0, 0, 255)) # Dummy rendering color
             continue
         g.affiche_rectangle( # Debug rectangle
             vial_rect.pos.to_tuple(),
@@ -136,15 +138,21 @@ def poll_inputs(vials) -> tuple:
                 if vial.is_point_inside(click):
                     index = i
                     break
-                
-            if __SELECTED_VIAL_INDEX is None:
+            if __SELECTED_VIAL_INDEX is None: # Selecting first vial
                 __SELECTED_VIAL_INDEX = index
-            else:
-                if __SELECTED_VIAL_INDEX == index:
+            else: # Else we already have a vial selected
+                if __SELECTED_VIAL_INDEX == index: # Deselecting if the user clicked on the vial again
                     __SELECTED_VIAL_INDEX = None
-                else:
-                    return (InputType.MOVE, __SELECTED_VIAL_INDEX, index)
-            render_all(vials)
+                elif index != None: # Selecting the other vial
+                    ret = (InputType.MOVE, __SELECTED_VIAL_INDEX, index)
+                    __SELECTED_VIAL_INDEX = None
+                    return ret
+
         elif __UI_RECT_PX.is_point_inside(click):
             # Go over every button in the UI rect and return which action was pressed
-            pass
+            __SELECTED_VIAL_INDEX = None
+
+        else:
+            __SELECTED_VIAL_INDEX = None
+        
+        render_all(vials)

@@ -2,6 +2,8 @@ import Rendering.Renderer as r
 import Rendering.RenderSettings as rs
 from Rendering.Core import *
 
+UserInputType = InputType
+
 def start(width, height, title = "A window"):
     r.init()
     r.create_window(width, height, title)
@@ -24,4 +26,7 @@ def display_game(game):
     r.render()
 
 def poll_input(game) -> tuple:
-    r.poll_inputs(game.vials)
+    while True: # Temporary code waiting for support in main of InputTypes
+        input = r.poll_inputs(game.vials)
+        if input[0] == UserInputType.MOVE:
+            return (input[1], input[2]) # The 2 vial indexes
