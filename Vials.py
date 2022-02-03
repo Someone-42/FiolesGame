@@ -33,6 +33,12 @@ class Vial:
         self.top += 1
         self.content[self.top] = value
         
+    def push_content(self, added_content):
+        # TESTING METHOD
+        k = min(self._place_free(), len(added_content))
+        for i in range(k):
+            self.push(added_content[i])
+
     def move_into(self, other):
         """move vial 1 last color in vial 2 """
         k = min(self._top_color_count, other._place_free())

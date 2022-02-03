@@ -11,3 +11,5 @@ def run():
         if not game.try_move(i1, i2):
             show_invalid_move()
         
+if __name__ == "__main__":
+    run()
