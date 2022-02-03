@@ -7,7 +7,7 @@ class Vial:
 
     def _top_color_count(self):
         """return top color's size in the vial"""
-        if self._is_empty():
+        if self.is_empty():
             return 0
         counter = 1
         while self.content[self.top] == self.content[self.top - counter]:
@@ -37,21 +37,26 @@ class Vial:
         # TESTING METHOD
         k = min(self._place_free(), len(added_content))
         for i in range(k):
+            if added_content[i] == 0: continue
             self.push(added_content[i])
 
     def move_into(self, other):
         """move vial 1 last color in vial 2 """
-        k = min(self._top_color_count, other._place_free())
+        k = min(self._top_color_count(), other._place_free())
         for i in range(k):
             other.push(self.pop())
             
     def can_move_into(self, other):
         """return True if the move is possible, else return False"""
-        if self.top + 1  == other.size() or self.content[self.top] != other.content[other.top]:
+        if other.top + 1 == other.size or (not other.is_empty() and self.content[self.top] != other.content[other.top]):
             return False
+        return True
 
     def is_complete(self,):
         """return True is the vial is complete, else return False"""
-        return self.content.count(self.content[0]) == len(self.content)          
+        return self.content.count(self.content[0]) == len(self.content)
+
+    def __len__(self):
+        return self.size       
 
 

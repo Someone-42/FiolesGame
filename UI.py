@@ -25,6 +25,9 @@ def display_game(game):
     r.render_UI()
     r.render()
 
+def show_invalid_move():
+    print("you dumb fuck")
+
 def poll_input(game) -> tuple:
     while True: # Temporary code waiting for support in main of InputTypes
         input = r.poll_inputs(game.vials)

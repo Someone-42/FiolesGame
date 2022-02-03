@@ -23,11 +23,14 @@ class VialModel:
             if not liquid:
                 break
             g.affiche_rectangle_plein(
-                (rect.pos + Vector2(color_size_y * i, 0)).to_tuple(),
+                (rect.pos + Vector2(0, color_size_y * i)).to_tuple(),
                 (rect.pos + Vector2(rect.size.x, color_size_y * (i + 1))).to_tuple(),
-                self.colors[liquid]
+                self.colors[liquid].to_tuple_rgb()
             )
             
         points = rect.get_points4()
-        for i in range(3):
-            g.affiche_ligne(points[i], points[i+1], self.line_color)
+        line_color_tuple = self.line_color.to_tuple_rgb()
+        for i in range(3, 6):
+            pi1 = i % 4
+            pi2 = (i+1) % 4
+            g.affiche_ligne(points[pi1].to_tuple(), points[pi2].to_tuple(), line_color_tuple, 6)

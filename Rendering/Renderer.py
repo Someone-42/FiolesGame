@@ -102,21 +102,19 @@ def render_vials(vials):
     # Then iterate over them
     # Get vial render size
     # Render using default parameters
-    g.affiche_rectangle_plein(__VIAL_RECT_PX.pos.to_tuple(), (__VIAL_RECT_PX.pos + __VIAL_RECT_PX.size).to_tuple(), (0, 200, 0)) # Layout debug
+    
+    #g.affiche_rectangle_plein(__VIAL_RECT_PX.pos.to_tuple(), (__VIAL_RECT_PX.pos + __VIAL_RECT_PX.size).to_tuple(), (0, 200, 0)) # Layout debug
 
     for vi, vial in enumerate(vials):
         vial_rect = __VIAL_RECTS[vi]
         if __SELECTED_VIAL_INDEX == vi:
             # Show it is selected
-            g.affiche_rectangle_plein( # Debug rectangle
-                vial_rect.pos.to_tuple(),
-                (vial_rect.pos + vial_rect.size).to_tuple(),
-                (0, 0, 255)) # Dummy rendering color
-            continue
-        g.affiche_rectangle( # Debug rectangle
-            vial_rect.pos.to_tuple(),
-            (vial_rect.pos + vial_rect.size).to_tuple(),
-            (0, 0, 255), 8) # Dummy rendering color
+            #g.affiche_rectangle( # Debug rectangle
+            #    vial_rect.pos.to_tuple(),
+            #    (vial_rect.pos + vial_rect.size).to_tuple(),
+            #    (0, 0, 0), 8) # Dummy rendering color
+            vial_rect = Rectangle2(vial_rect.pos - (vial_rect.size * 0.15), vial_rect.size * 1.3) # 30% size increase when vial selected
+        __RENDER_SETTINGS.vial_model.render(vial, vial_rect)
 
 def render_all(vials):
     clear()

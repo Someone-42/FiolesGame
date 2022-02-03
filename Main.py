@@ -5,6 +5,7 @@ game = Game()
 
 def run():
     start(1920,1080,"glass")
+    load_game(game)
     while not game.is_finished():
         display_game(game)
         (i1, i2) = wait_for_move()
