@@ -126,14 +126,20 @@ def poll_inputs(vials) -> tuple:
     """ Returns the treated input from a click or other user input """
     global __SELECTED_VIAL_INDEX
 
+    # I know a state machine here would be wise but im too lazy
+    def _can_select(vial):
+        if __SELECTED_VIAL_INDEX is None:
+            return not (vial.is_empty() or vial.is_complete())
+        return not vial.is_complete()
+
     while True: # Continue asking for input till we get an input can be returned
         _x, _y = g.wait_clic()
         click = Vector2(_x, _y)
 
         if __VIAL_RECT_PX.is_point_inside(click):
             index = None
-            for i, vial in enumerate(__VIAL_RECTS):
-                if vial.is_point_inside(click):
+            for i, vial_r in enumerate(__VIAL_RECTS):
+                if vial_r.is_point_inside(click) and _can_select(vials[i]):
                     index = i
                     break
             if __SELECTED_VIAL_INDEX is None: # Selecting first vial

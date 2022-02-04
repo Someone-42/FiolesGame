@@ -12,7 +12,7 @@ def get_test_level():
     vials[5].push_content([4, 3, 3])
     vials[6].push_content([2, 5, 5])
     vials[7].push_content([4, 2, 5])
-    vials[8].push_content([2, 2])
+    vials[8].push_content([2, 2]) 
     return vials
 
 def run():
