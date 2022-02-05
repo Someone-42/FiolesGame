@@ -65,6 +65,8 @@ def _bake():
     __VIAL_RECT_PX = vials_rect_px
     __UI_RECT_PX = ui_rect_px
 
+
+
 def _bake_vials_rect(vial_count):
     vial_max_size_x_px = __VIAL_RECT_PX.size.x / __RENDER_SETTINGS.vials_per_row # We only calculate the size on the x axis, as the y axis size will depend on how many vials there are
     vial_spacing_x_px = vial_max_size_x_px * (__RENDER_SETTINGS.vial_spacing / 2)
@@ -130,7 +132,7 @@ def poll_inputs(vials) -> tuple:
     def _can_select(vial):
         if __SELECTED_VIAL_INDEX is None:
             return not (vial.is_empty() or vial.is_complete())
-        return not vial.is_complete()
+        return (vial.is_empty()) or (not vial.is_complete())
 
     while True: # Continue asking for input till we get an input can be returned
         _x, _y = g.wait_clic()
