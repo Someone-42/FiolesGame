@@ -14,7 +14,7 @@ class ButtonModel:
 
 class QuitButtonModel(ButtonModel):
     __slots__ = ("color")
-    def __init__(self, color = (255, 0, 0)):
+    def __init__(self, color = Color(255, 0, 0)):
         self.color = color
         super().__init__()
 

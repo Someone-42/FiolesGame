@@ -65,7 +65,18 @@ def _bake():
     __VIAL_RECT_PX = vials_rect_px
     __UI_RECT_PX = ui_rect_px
 
+    buttons = [__RENDER_SETTINGS.quit_button]
 
+    for i, button in enumerate(buttons):
+        button.model.set_baked_rect(
+            Rectangle2(
+                button.rect.pos.mul_comp(__WINDOW_SIZE),
+                button.rect.size.mul_comp(__WINDOW_SIZE)
+            )
+        )
+
+    global __BUTTONS
+    __BUTTONS = buttons
 
 def _bake_vials_rect(vial_count):
     vial_max_size_x_px = __VIAL_RECT_PX.size.x / __RENDER_SETTINGS.vials_per_row # We only calculate the size on the x axis, as the y axis size will depend on how many vials there are
@@ -99,6 +110,9 @@ def render():
 
 def render_UI():
     g.affiche_rectangle_plein(__UI_RECT_PX.pos.to_tuple(), (__UI_RECT_PX.pos + __UI_RECT_PX.size).to_tuple(), (200, 200, 0)) # Layout debug
+    for button in __BUTTONS:
+        # Render every button
+        button.model.render(button)
 
 def render_vials(vials):
     # Then iterate over them

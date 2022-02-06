@@ -217,7 +217,7 @@ class Button:
         print("The button at", self.rect.pos, "of size", self.rect.size, "was clicked")
 
     def render(self):
-        self.model.render(self, )
+        self.model.render(self)
 
 class InputType(Enum):
     UNDO = -1

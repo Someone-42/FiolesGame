@@ -23,7 +23,7 @@ class VialModel:
             if not liquid:
                 break
             g.affiche_rectangle_plein(
-                (rect.pos + Vector2(0, color_size_y * i)).to_tuple(),
+                (rect.pos + Vector2(0, color_size_y * i - 2)).to_tuple(), # -2 so we have one more pixel down to render the full vial
                 (rect.pos + Vector2(rect.size.x, color_size_y * (i + 1))).to_tuple(),
                 self.colors[liquid].to_tuple_rgb()
             )
