@@ -200,22 +200,26 @@ class Rectangle2(Primitive):
             point.y <= max_y
 
 class Button:
-    __slots__=("rect", "on_click")
-    def __init__(self, rect, on_click = None):
+    __slots__=("rect", "on_click", "model")
+    def __init__(self, rect, model, on_click = None):
         self.rect = rect
         if on_click is None:
             self.on_click = self.default_on_click
         else:
             self.on_click = on_click
+        self.model = model
 
     def is_click_on_button(self, click) -> bool:
         """ Returns true or false if the button was clicked """
         return rect.is_point_inside(click)
 
-    def default_on_click():
+    def default_on_click(self):
         print("The button at", self.rect.pos, "of size", self.rect.size, "was clicked")
 
+    def render(self):
+        self.model.render(self, )
+
 class InputType(Enum):
-    GO_BACK = -1
+    UNDO = -1
     MOVE = 0
     QUIT = 1
