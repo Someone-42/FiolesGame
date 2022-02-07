@@ -3,7 +3,7 @@ from Rendering.BaseModels.VialModel import VialModel
 from Rendering.BaseModels.ButtonModels import QuitButtonModel
 
 def _quit_button_return(self):
-    return (core.InputType.QUIT)
+    return (core.InputType.QUIT,)
 
 class RenderSettings:
     __slots__=(

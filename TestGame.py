@@ -22,9 +22,15 @@ def run():
     load_game(game)
     while not game.is_finished():
         display_game(game)
-        (i1, i2) = poll_input(game)
-        if not game.try_move(i1, i2):
-            show_invalid_move()
+        input_value = poll_input(game)
+        input_type = input_value[0]
+        if input_type == InputType.QUIT:
+            print("quitting")
+            return
+        elif input_type == InputType.MOVE:
+            (_, i1, i2) = input_value
+            if not game.try_move(i1, i2):
+                show_invalid_move()
     print("finished game")
         
 if __name__ == "__main__":

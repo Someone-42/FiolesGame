@@ -211,7 +211,7 @@ class Button:
 
     def is_click_on_button(self, click) -> bool:
         """ Returns true or false if the button was clicked """
-        return rect.is_point_inside(click)
+        return self.model.baked_rect.is_point_inside(click)
 
     def default_on_click(self):
         print("The button at", self.rect.pos, "of size", self.rect.size, "was clicked")

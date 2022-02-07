@@ -29,7 +29,4 @@ def show_invalid_move():
     print("you dumb fuck")
 
 def poll_input(game) -> tuple:
-    while True: # Temporary code waiting for support in main of InputTypes
-        input = r.poll_inputs(game.vials)
-        if input[0] == UserInputType.MOVE:
-            return (input[1], input[2]) # The 2 vial indexes
+    return r.poll_inputs(game.vials)

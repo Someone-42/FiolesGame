@@ -171,7 +171,9 @@ def poll_inputs(vials) -> tuple:
         elif __UI_RECT_PX.is_point_inside(click):
             # Go over every button in the UI rect and return which action was pressed
             __SELECTED_VIAL_INDEX = None
-
+            for button in __BUTTONS:
+                if button.is_click_on_button(click):
+                    return button.on_click(button)
         else:
             __SELECTED_VIAL_INDEX = None
         
