@@ -2,6 +2,10 @@ from Game import*
 from UI import*
 from Stack import*
 from Vials import*
+from vlc import*
+
+p = vlc.MediaPlayer("file:///path/to/skyrim-the-song-of-the-dragonborn-with-lyrics.mp3")
+p.play()
 
 def get_test_level():
     vials = [Vial(4) for _ in range(10)]
