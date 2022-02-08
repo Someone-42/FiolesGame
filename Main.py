@@ -18,7 +18,7 @@ def get_test_level():
 
 game = Game()
 game.vials = get_test_level()
-save = Stack()
+'''save = Stack()'''
 
 def run():
     start(1080,800,"glass")
@@ -29,13 +29,13 @@ def run():
         if i[0] == UserInputType.MOVE:
             if not game.try_move(i[1], i[2]):
                 show_invalid_move()
-            save.push((i[1], i[2]))
+            '''save.push((i[1], i[2]))'''
             if i[0] == UserInputType.QUIT:
                 break
-            if i[0] == UserInputType.UNDO:
+            '''if i[0] == UserInputType.UNDO:
                 if not save.is_empty():
                     s = save.pop()
-                    game.try_move(s[1], s[0])
+                    game.try_move(s[1], s[0])'''
     print('adios amigos hehe')
         
 if __name__ == "__main__":
