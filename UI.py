@@ -1,6 +1,7 @@
 import Rendering.Renderer as r
 import Rendering.RenderSettings as rs
 from Rendering.Core import *
+from Rendering.SoundManager import *
 
 UserInputType = InputType
 

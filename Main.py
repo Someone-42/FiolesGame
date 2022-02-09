@@ -36,3 +36,7 @@ def run():
         
 if __name__ == "__main__":
     run()
+
+
+s = Sound('tetris-theme-officiel.mp3')
+s.play(True)
