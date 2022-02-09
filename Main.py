@@ -1,11 +1,7 @@
-from Game import*
-from UI import*
-from Stack import*
-from Vials import*
-from vlc import*
-
-p = vlc.MediaPlayer("file:///path/to/skyrim-the-song-of-the-dragonborn-with-lyrics.mp3")
-p.play()
+from Game import *
+from UI import *
+from Stack import *
+from Vials import *
 
 def get_test_level():
     vials = [Vial(4) for _ in range(10)]
@@ -22,7 +18,6 @@ def get_test_level():
 
 game = Game()
 game.vials = get_test_level()
-'''save = Stack()'''
 
 def run():
     start(1080,800,"glass")
@@ -33,13 +28,10 @@ def run():
         if i[0] == UserInputType.MOVE:
             if not game.try_move(i[1], i[2]):
                 show_invalid_move()
-            '''save.push((i[1], i[2]))'''
-            if i[0] == UserInputType.QUIT:
-                break
-            '''if i[0] == UserInputType.UNDO:
-                if not save.is_empty():
-                    s = save.pop()
-                    game.try_move(s[1], s[0])'''
+        if i[0] == UserInputType.QUIT:
+            break
+        if i[0] == UserInputType.UNDO:
+            game.undo_move()
     print('adios amigos hehe')
         
 if __name__ == "__main__":

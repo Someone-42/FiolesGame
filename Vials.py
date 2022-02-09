@@ -45,6 +45,7 @@ class Vial:
         k = min(self._top_color_count(), other._place_free())
         for i in range(k):
             other.push(self.pop())
+        return k
             
     def can_move_into(self, other):
         """return True if the move is possible, else return False"""
@@ -52,9 +53,13 @@ class Vial:
             return False
         return True
 
-    def is_complete(self,):
+    def is_complete(self):
         """return True is the vial is complete, else return False"""
         return self.content.count(self.content[0]) == len(self.content)
+
+    def force_move(self, other, quantity):
+        for _ in range(quantity):
+            other.push(self.pop())
 
     def __len__(self):
         return self.size       

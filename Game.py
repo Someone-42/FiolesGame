@@ -1,4 +1,5 @@
 from Stack import*
+from Move import Move
 
 class Game:
     def __init__(self):
@@ -7,7 +8,8 @@ class Game:
 
     def try_move(self, a, b):
         if self.vials[a].can_move_into(self.vials[b]):
-            self.vials[a].move_into(self.vials[b])
+            q = self.vials[a].move_into(self.vials[b])
+            self.moves.push(Move(self.vials[a], self.vials[b], q))
             return True
         return False
 
@@ -18,3 +20,9 @@ class Game:
             if i == (len(self.vials)) - 1:
                 return True
         return False
+
+    def undo_move(self):
+        if self.moves.is_empty():
+            return False
+        self.moves.pop().undo()
+        return True
