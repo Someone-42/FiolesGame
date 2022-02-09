@@ -28,9 +28,9 @@ def run():
         if i[0] == UserInputType.MOVE:
             if not game.try_move(i[1], i[2]):
                 show_invalid_move()
-        if i[0] == UserInputType.QUIT:
+        elif i[0] == UserInputType.QUIT:
             break
-        if i[0] == UserInputType.UNDO:
+        elif i[0] == UserInputType.UNDO:
             game.undo_move()
     print('adios amigos hehe')
         
