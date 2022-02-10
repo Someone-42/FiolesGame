@@ -18,7 +18,6 @@ class Vial:
         """return free place in the vials"""
         return self.size - (self.top + 1)
     
-    
     def is_empty(self):
         """return True is the vial is empty, else return False"""
         return self.top == -1
@@ -37,7 +36,7 @@ class Vial:
         # TESTING METHOD
         k = min(self._place_free(), len(added_content))
         for i in range(k):
-            if added_content[i] == 0: continue
+            if added_content[i] == 0: break
             self.push(added_content[i])
 
     def move_into(self, other):
