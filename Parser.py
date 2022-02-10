@@ -14,7 +14,7 @@ class Parser:
         lines = file.readlines()
         file.close()
         if index >= len(lines):            
-            raise IndexError("Out of range exception - level doesn't exist UwU")
+            raise IndexError("Out of range exception - level doesn't exist")
         else:
             level = self._read_to_list(lines[index])
             level_vials = []
