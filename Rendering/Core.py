@@ -219,6 +219,19 @@ class Button:
     def render(self):
         self.model.render(self)
 
+class Label:
+    __slots__ = (
+        "model",
+        "rect"
+    )
+    
+    def __init__(self, rect, model):
+        self.rect = rect
+        self.model = model
+
+    def set_text(self, text):
+        model.set_text(text)
+
 class InputType(Enum):
     UNDO = -1
     MOVE = 0
