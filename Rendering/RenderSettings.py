@@ -1,5 +1,5 @@
 import Rendering.Core as core
-from Rendering.BaseModels.VialModel import VialModel
+from Rendering.BaseModels.VialModels import VialModel
 from Rendering.BaseModels.ButtonModels import QuitButtonModel
 
 def _quit_button_return(self):

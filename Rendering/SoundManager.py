@@ -1,9 +1,9 @@
-from graphics import*
+import pygame
 
 class Sound:
     def __init__(self, song):
         self.songLoaded = pygame.mixer.music.load(song)
-        self.mixer.music.set_volume(0.1)
+        pygame.mixer.music.set_volume(0.1)
     
     def replace(self, newSong):
         self.mixer.music.load(newSong)

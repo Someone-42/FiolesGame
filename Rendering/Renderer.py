@@ -18,7 +18,7 @@ __SELECTED_VIAL_INDEX = None
 __VIAL_RECT_PX = None
 __UI_RECT_PX = None
 
-__VIAL_RECTS = []
+__VIALS_POS = []
 
 __BUTTONS = []
 
@@ -89,18 +89,16 @@ def _bake_vials_rect(vial_count):
     vial_spacing_y_px = vial_max_size_y_px * (__RENDER_SETTINGS.row_spacing / 2)
     vial_size_y_px = vial_max_size_y_px - vial_spacing_y_px + (vial_spacing_y_px / rows)
 
-    __VIAL_RECTS.clear()
+    __VIALS_POS.clear()
+
+    __RENDER_SETTINGS.vial_model.set_baked_size(Vector2(vial_size_x_px, vial_size_y_px))
 
     for i in range(vial_count):
         xi = i % __RENDER_SETTINGS.vials_per_row # Getting the column or x position
         yi = rows - 1 - (i // __RENDER_SETTINGS.vials_per_row) # Reversing so we fill up from the top
-        __VIAL_RECTS.append(Rectangle2(
-            Vector2(
+        __VIALS_POS.append(Vector2(
                 xi * (vial_size_x_px + vial_spacing_x_px) + __VIAL_RECT_PX.pos.x,
-                yi * (vial_size_y_px + vial_spacing_y_px) + __VIAL_RECT_PX.pos.y),
-            Vector2(
-                vial_size_x_px,
-                vial_size_y_px)))
+                yi * (vial_size_y_px + vial_spacing_y_px) + __VIAL_RECT_PX.pos.y))
 
 def clear():
     g.remplir_fenetre(__RENDER_SETTINGS.clear_color.to_tuple_rgb())
@@ -115,22 +113,11 @@ def render_UI():
         button.model.render(button)
 
 def render_vials(vials):
-    # Then iterate over them
-    # Get vial render size
-    # Render using default parameters
     
     #g.affiche_rectangle_plein(__VIAL_RECT_PX.pos.to_tuple(), (__VIAL_RECT_PX.pos + __VIAL_RECT_PX.size).to_tuple(), (0, 200, 0)) # Layout debug
 
     for vi, vial in enumerate(vials):
-        vial_rect = __VIAL_RECTS[vi]
-        if __SELECTED_VIAL_INDEX == vi:
-            # Show it is selected
-            #g.affiche_rectangle( # Debug rectangle
-            #    vial_rect.pos.to_tuple(),
-            #    (vial_rect.pos + vial_rect.size).to_tuple(),
-            #    (0, 0, 0), 8) # Dummy rendering color
-            vial_rect = Rectangle2(vial_rect.pos - (vial_rect.size * 0.15), vial_rect.size * 1.3) # 30% size increase when vial selected
-        __RENDER_SETTINGS.vial_model.render(vial, vial_rect)
+        __RENDER_SETTINGS.vial_model.render(vial, __VIALS_POS[vi], __SELECTED_VIAL_INDEX == vi)
 
 def render_all(vials):
     clear()
@@ -154,7 +141,9 @@ def poll_inputs(vials) -> tuple:
 
         if __VIAL_RECT_PX.is_point_inside(click):
             index = None
-            for i, vial_r in enumerate(__VIAL_RECTS):
+            for i, vial_p in enumerate(__VIALS_POS):
+                vial = vials[i]
+                vial_r = Rectangle2(vial_p, __RENDER_SETTINGS.vial_model.baked_size)
                 if vial_r.is_point_inside(click) and _can_select(vials[i]):
                     index = i
                     break
