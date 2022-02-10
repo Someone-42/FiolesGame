@@ -1,6 +1,7 @@
 import Rendering.Core as core
 from Rendering.BaseModels.VialModels import VialModel
 from Rendering.BaseModels.ButtonModels import QuitButtonModel
+from Rendering.BaseModels.LabelModel import LabelModel
 
 def _quit_button_return(self):
     return (core.InputType.QUIT,)
@@ -19,7 +20,8 @@ class RenderSettings:
         "ui_rect",
         "vial_model",
         "quit_button",
-        "undo_button"
+        "undo_button",
+        "invalid_move_label"
         )
     def __init__(self, vials_per_row = 6, 
         margin_size = 0.025, 
@@ -31,6 +33,7 @@ class RenderSettings:
         core.Vector2(1, 0.15)), 
         clear_color=core.Color(0, 0, 0), 
         vial_model=VialModel(),
+        invalid_move_label=core.Label(core.Rectangle2(core.Vector2(0.05, 0.15 * 0.15), core.Vector2(0.30, 0.15 * 0.75)), LabelModel("Invalid move", core.Color(210, 10, 0))),
         quit_button=core.Button(core.Rectangle2(core.Vector2(0.85, 0), core.Vector2(0.15, 0.15)), QuitButtonModel(), _quit_button_return),
         undo_button=core.Button(core.Rectangle2(core.Vector2(0.40, 0), core.Vector2(0.20, 0.15)), QuitButtonModel(core.Color(142, 200, 10)), _undo_button_return)
         ):
@@ -46,3 +49,4 @@ class RenderSettings:
         self.vial_model = vial_model
         self.quit_button = quit_button
         self.undo_button = undo_button
+        self.invalid_move_label = invalid_move_label

@@ -24,7 +24,9 @@ def display_game(game):
     r.render_all(game)
 
 def show_invalid_move():
-    r.render_invalid_move()
+    r.render_new_invalid_move()
+    r._render_invalid_move()
+    r.render()
 
 def poll_input(game) -> tuple:
     return r.poll_inputs(game)

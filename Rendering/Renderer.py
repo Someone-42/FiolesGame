@@ -21,6 +21,9 @@ __UI_RECT_PX = None
 __VIALS_POS = []
 
 __BUTTONS = []
+__LABELS = {}
+
+__LAST_MOVE_WAS_INVALID = False
 
 def __sc_to_ss(v: Vector2) -> Vector2:
     """ Returns Screen Coordinates vector to Screen Space """
@@ -42,10 +45,10 @@ def load_settings(render_settings):
     if __VIAL_COUNT:
         _bake_vials_rect(__VIAL_COUNT)
 
-def load_game(vial_count):
+def load_game(game):
     global __VIAL_COUNT
-    __VIAL_COUNT = vial_count
-    _bake_vials_rect(vial_count)
+    __VIAL_COUNT = len(game.vials)
+    _bake_vials_rect(len(game.vials))
 
 def create_window(width, height, title = "A window"):
     global __WINDOW_SIZE
@@ -77,6 +80,22 @@ def _bake():
 
     global __BUTTONS
     __BUTTONS = buttons
+
+    labels = {
+        "invalid" : __RENDER_SETTINGS.invalid_move_label
+    }
+
+    global __LABELS
+
+    for key in labels.keys():
+        label = labels[key]
+        label.model.set_baked_rect(
+            Rectangle2(
+                label.rect.pos.mul_comp(__WINDOW_SIZE),
+                label.rect.size.mul_comp(__WINDOW_SIZE)
+            )
+        )
+        __LABELS[key] = label
 
 def _bake_vials_rect(vial_count):
     vial_max_size_x_px = __VIAL_RECT_PX.size.x / __RENDER_SETTINGS.vials_per_row # We only calculate the size on the x axis, as the y axis size will depend on how many vials there are
@@ -113,19 +132,25 @@ def render_UI():
         button.model.render(button)
 
 def render_vials(vials):
-    
     #g.affiche_rectangle_plein(__VIAL_RECT_PX.pos.to_tuple(), (__VIAL_RECT_PX.pos + __VIAL_RECT_PX.size).to_tuple(), (0, 200, 0)) # Layout debug
-
     for vi, vial in enumerate(vials):
         __RENDER_SETTINGS.vial_model.render(vial, __VIALS_POS[vi], __SELECTED_VIAL_INDEX == vi)
 
-def render_all(vials):
+def _render_invalid_move():
+    if __LAST_MOVE_WAS_INVALID:
+        label = __LABELS["invalid"]
+        label.model.render()
+
+def render_all(game):
     clear()
     render_UI()
-    render_vials(vials)
+    render_vials(game.vials)
+    _render_invalid_move()
     render()
+    global __LAST_MOVE_WAS_INVALID
+    __LAST_MOVE_WAS_INVALID = False
 
-def poll_inputs(vials) -> tuple:
+def poll_inputs(game) -> tuple:
     """ Returns the treated input from a click or other user input """
     global __SELECTED_VIAL_INDEX
 
@@ -142,9 +167,9 @@ def poll_inputs(vials) -> tuple:
         if __VIAL_RECT_PX.is_point_inside(click):
             index = None
             for i, vial_p in enumerate(__VIALS_POS):
-                vial = vials[i]
+                vial = game.vials[i]
                 vial_r = Rectangle2(vial_p, __RENDER_SETTINGS.vial_model.baked_size)
-                if vial_r.is_point_inside(click) and _can_select(vials[i]):
+                if vial_r.is_point_inside(click) and _can_select(vial):
                     index = i
                     break
             if __SELECTED_VIAL_INDEX is None: # Selecting first vial
@@ -166,4 +191,8 @@ def poll_inputs(vials) -> tuple:
         else:
             __SELECTED_VIAL_INDEX = None
         
-        render_all(vials)
+        render_all(game)
+
+def render_new_invalid_move():
+    global __LAST_MOVE_WAS_INVALID
+    __LAST_MOVE_WAS_INVALID = True
