@@ -18,16 +18,13 @@ def start(width, height, title = "A window"):
         clear_color = Color(42, 42, 42)))
 
 def load_game(game):
-    r.load_game(len(game.vials))
+    r.load_game(game)
 
 def display_game(game):
-    r.clear()
-    r.render_vials(game.vials)
-    r.render_UI()
-    r.render()
+    r.render_all(game)
 
 def show_invalid_move():
-    print("you dumb fuck")
+    r.render_invalid_move()
 
 def poll_input(game) -> tuple:
-    return r.poll_inputs(game.vials)
+    return r.poll_inputs(game)
