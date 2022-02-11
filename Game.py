@@ -16,9 +16,9 @@ class Game:
     def is_finished(self):
         i = 0
         while self.vials[i].is_complete() or self.vials[i].is_empty():
-            i += 1
             if i == (len(self.vials)) - 1:
                 return True
+            i += 1
         return False
 
     def undo_move(self):
