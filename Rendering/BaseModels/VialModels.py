@@ -8,12 +8,13 @@ class VialModel:
         "baked_size"
     )
     def __init__(self, line_color = Color(255, 255, 255), colors = [
-        Color(200, 0, 0),
-        Color(0, 200, 0),
-        Color(50, 80, 200),
-        Color(150, 0, 220),
-        Color(140, 140, 0),
-        Color(200, 200, 230)
+        Color(136, 1, 142),
+        Color(20, 90, 255),
+        Color(40, 190, 60),
+        Color(249, 65, 68),
+        Color(255, 141, 0),
+        Color(85, 205, 252),
+        Color(0, 0, 0)
     ]):
         self.colors = colors
         self.line_color = line_color
@@ -36,12 +37,12 @@ class VialModel:
             g.affiche_rectangle_plein(
                 (pos + Vector2(0, color_size_y * i - 2)).to_tuple(), # -2 so we have one more pixel down to render the full vial
                 (pos + Vector2(size.x, color_size_y * (i + 1))).to_tuple(),
-                self.colors[liquid].to_tuple_rgb()
+                self.colors[liquid - 1].to_tuple_rgb()
             )
             
         points = Rectangle2(pos, size).get_points4()
         line_color_tuple = self.line_color.to_tuple_rgb()
-        for i in range(3, 6):
+        for i in range(3, 7 if ((not vial.is_empty()) and vial.is_complete()) else 6):
             pi1 = i % 4
             pi2 = (i+1) % 4
             g.affiche_ligne(points[pi1].to_tuple(), points[pi2].to_tuple(), line_color_tuple, line_size)
