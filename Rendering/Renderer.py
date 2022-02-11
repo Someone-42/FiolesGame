@@ -126,7 +126,7 @@ def render():
     g.affiche_tout()
 
 def render_UI():
-    g.affiche_rectangle_plein(__UI_RECT_PX.pos.to_tuple(), (__UI_RECT_PX.pos + __UI_RECT_PX.size).to_tuple(), (200, 200, 0)) # Layout debug
+    #g.affiche_rectangle_plein(__UI_RECT_PX.pos.to_tuple(), (__UI_RECT_PX.pos + __UI_RECT_PX.size).to_tuple(), (200, 200, 0)) # Layout debug
     for button in __BUTTONS:
         # Render every button
         button.model.render(button)
