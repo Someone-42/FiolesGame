@@ -199,6 +199,12 @@ class Rectangle2(Primitive):
             point.y >= min_y and \
             point.y <= max_y
 
+    def copy(self):
+        return Rectangle2(
+            self.pos.copy(),
+            self.size.copy()
+        )
+
 class Button:
     __slots__=("rect", "on_click", "model")
     def __init__(self, rect, model, on_click = None):
