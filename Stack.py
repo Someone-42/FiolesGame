@@ -14,4 +14,7 @@ class Stack:
     
     def peek(self, index):
         return self.items[index]
+
+    def __len__(self):
+        return len(self.items)
         
