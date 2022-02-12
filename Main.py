@@ -10,7 +10,7 @@ game = Game()
 game.vials = levels.load_level(1)
 
 def run():
-    start(1920,1080,"glass")
+    start(1200,900,"glass")
     load_game(game)
     while not game.is_finished():
         display_game(game)

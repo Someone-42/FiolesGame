@@ -19,7 +19,8 @@ class LabelModel:
         "color",
         "_font",
         "baked_rect",
-        "_font_size"
+        "_font_size",
+        "_text_pos"
     )
     def __init__(self, text, color = Color(255, 255, 255), font = "arial"):
         self.color = color
@@ -27,6 +28,7 @@ class LabelModel:
         self.baked_rect = None
         self._font_size = 42
         self._text = text
+        self._text_pos = None
 
     def set_baked_rect(self, baked_rect):
         self.baked_rect = baked_rect
@@ -36,6 +38,8 @@ class LabelModel:
         if self.baked_rect is None:
             raise Error("Cannot recalculate without a size defined")
         self._font_size = _get_optimal_font_size(self._text, self.baked_rect.size, self._font)
+        text_rect_size = _get_text_size(self._text, self._font_size, self._font)
+        self._text_pos = (self.baked_rect.size - text_rect_size) / 2.1 + self.baked_rect.pos
 
     def set_text(self, text):
         old_text = self._text
@@ -44,4 +48,4 @@ class LabelModel:
             self._recalculate()
 
     def render(self):
-        g.affiche_texte(self._text, self.baked_rect.pos.to_tuple(), self.color.to_tuple_rgb(), self._font_size, self._font)
+        g.affiche_texte(self._text, self._text_pos.to_tuple(), self.color.to_tuple_rgb(), self._font_size, self._font)

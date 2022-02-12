@@ -125,8 +125,9 @@ def clear():
 def render():
     g.affiche_tout()
 
-def render_UI():
+def render_UI(game):
     #g.affiche_rectangle_plein(__UI_RECT_PX.pos.to_tuple(), (__UI_RECT_PX.pos + __UI_RECT_PX.size).to_tuple(), (200, 200, 0)) # Layout debug
+    __BUTTONS[1].model.set_count(len(game.moves)) # Setting the count of undo button to the len of the moves
     for button in __BUTTONS:
         # Render every button
         button.model.render(button)
@@ -143,7 +144,7 @@ def _render_invalid_move():
 
 def render_all(game):
     clear()
-    render_UI()
+    render_UI(game)
     render_vials(game.vials)
     _render_invalid_move()
     render()

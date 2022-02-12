@@ -24,3 +24,28 @@ class QuitButtonModel(ButtonModel):
             (self.baked_rect.pos + self.baked_rect.size).to_tuple(),
             self.color.to_tuple_rgb()
         )
+
+class UndoButtonModel(ButtonModel):
+    __slots__=("color", "label_model")
+    def __init__(self, label_model, color = Color(40, 190, 60)):
+        self.color = color
+        self.label_model = label_model
+        super().__init__()
+
+    def set_baked_rect(self, rect):
+        self.baked_rect = rect
+        text_rect = Rectangle2(rect.pos + (rect.size * 0.15), rect.size * 0.7)
+        self.label_model.set_baked_rect(text_rect)
+
+    def set_count(self, count):
+        s = str(count)
+        if count == 0:
+            s = ' '
+        self.label_model.set_text(s)
+
+    def render(self, button):
+        g.affiche_rectangle(
+            self.baked_rect.pos.to_tuple(), 
+            (self.baked_rect.pos + self.baked_rect.size).to_tuple(),
+            self.color.to_tuple_rgb())
+        self.label_model.render()
