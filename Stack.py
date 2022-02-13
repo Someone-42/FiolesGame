@@ -17,4 +17,7 @@ class Stack:
 
     def __len__(self):
         return len(self.items)
+    
+    def clear(self):
+        self.items.clear()
         
