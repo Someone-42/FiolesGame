@@ -101,21 +101,23 @@ class Sprite:
             self.set_size(self.get_size() * scale)
             pos = (bounding_box.size - self.get_size()) / 2 #+ Vector2.scalar(0.5)
             self.set_position(self.get_position() + pos)
-            self.set_partial_part(True, Rect(pos.abs_comp(), bounding_box.size.copy()))
+            self.set_partial_part(True, Rectangle2(pos.abs_comp(), bounding_box.size.copy()))
         return bounding_box_ret
 
 class SpriteModel:
     __slots__=(
         "sprite",
-        "baked_rect"
+        "baked_rect",
+        "fit_mode"
     )
-    def __init__(self, image_path, image_size):
+    def __init__(self, image_path, image_size, fit_mode = SpriteFitMode.FIT):
         self.baked_rect = None
         self.sprite = Sprite(image_path, image_size)
+        self.fit_mode = fit_mode
 
     def set_baked_rect(self, rect):
         self.baked_rect = rect
-        self.sprite.set_to_fit_in_box(rect)
+        self.sprite.set_to_fit_in_box(rect, self.fit_mode)
 
     def render(self):
         g.affiche_image(self.sprite.get_img_src(), self.sprite._r_pos.to_tuple())

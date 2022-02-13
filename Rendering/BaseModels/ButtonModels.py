@@ -1,6 +1,7 @@
 from Rendering.Core import *
 import Rendering.graphics as g
-from Rendering.BaseModels.SpriteModel import SpriteModel
+from Rendering.BaseModels.SpriteModel import SpriteModel, SpriteFitMode
+
 
 class ButtonModel:
     __slots__ = ("baked_rect")
@@ -14,24 +15,29 @@ class ButtonModel:
         self.baked_rect = rect
 
 class QuitButtonModel(ButtonModel):
-    __slots__ = ("color")
-    def __init__(self, color = Color(255, 0, 0)):
-        self.color = color
+    __slots__ = ("sprite_model")
+    def __init__(self):
+        self.sprite_model = SpriteModel("./Assets/Images/QuitGame.png", Vector2(512, 512), SpriteFitMode.FIT)
         super().__init__()
 
+    def set_baked_rect(self, rect): 
+        self.baked_rect = rect
+        self.sprite_model.set_baked_rect(rect)
+
     def render(self, button):
-        g.affiche_rectangle_plein(
-            self.baked_rect.pos.to_tuple(),
-            (self.baked_rect.pos + self.baked_rect.size).to_tuple(),
-            self.color.to_tuple_rgb()
-        )
+        #g.affiche_rectangle_plein(
+        #    self.baked_rect.pos.to_tuple(),
+        #    (self.baked_rect.pos + self.baked_rect.size).to_tuple(),
+        #    (255, 0, 0)
+        #)
+        self.sprite_model.render()
+
 
 class UndoButtonModel(ButtonModel):
-    __slots__=("color", "label_model", "sprite_model")
-    def __init__(self, label_model, color = Color(40, 190, 60)):
-        self.color = color
+    __slots__=("label_model", "sprite_model")
+    def __init__(self, label_model):
         self.label_model = label_model
-        self.sprite_model = SpriteModel("./Assets/Images/UndoArrow.png", Vector2(512, 512))
+        self.sprite_model = SpriteModel("./Assets/Images/UndoArrow.png", Vector2(512, 512), SpriteFitMode.STRETCH)
         super().__init__()
 
     def set_baked_rect(self, rect):
@@ -51,6 +57,6 @@ class UndoButtonModel(ButtonModel):
         #g.affiche_rectangle( # DEBUG RECT
         #    self.baked_rect.pos.to_tuple(), 
         #    (self.baked_rect.pos + self.baked_rect.size).to_tuple(),
-        #    self.color.to_tuple_rgb())
+        #    (0, 255, 0))
         self.sprite_model.render()
         self.label_model.render()
