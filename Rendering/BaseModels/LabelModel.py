@@ -39,7 +39,7 @@ class LabelModel:
             raise Error("Cannot recalculate without a size defined")
         self._font_size = _get_optimal_font_size(self._text, self.baked_rect.size, self._font)
         text_rect_size = _get_text_size(self._text, self._font_size, self._font)
-        self._text_pos = (self.baked_rect.size - text_rect_size) / 2.1 + self.baked_rect.pos
+        self._text_pos = (self.baked_rect.size - text_rect_size) / 2 + self.baked_rect.pos
 
     def set_text(self, text):
         old_text = self._text
@@ -48,4 +48,6 @@ class LabelModel:
             self._recalculate()
 
     def render(self):
+        #p1, p2 = self.baked_rect.get_points2()
+        #g.affiche_rectangle(p1.to_tuple(), p2.to_tuple(), (255, 255, 0)) # DEBUG RECT
         g.affiche_texte(self._text, self._text_pos.to_tuple(), self.color.to_tuple_rgb(), self._font_size, self._font)

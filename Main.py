@@ -13,7 +13,7 @@ def run():
     start(1200,900,"glass")
     load_game(game)
     while not game.is_finished():
-        display_game(game)
+        display_game(game)  
         i = poll_input(game)
         if i[0] == UserInputType.MOVE:
             if not game.try_move(i[1], i[2]):

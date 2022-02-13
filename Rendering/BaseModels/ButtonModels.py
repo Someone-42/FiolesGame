@@ -36,18 +36,19 @@ class UndoButtonModel(ButtonModel):
 
     def set_baked_rect(self, rect):
         self.baked_rect = rect
-        text_rect = Rectangle2(rect.pos + (rect.size * 0.15), rect.size * 0.7)
-        self.label_model.set_baked_rect(text_rect)
-        self.sprite_model.set_baked_rect(rect)
+        self.label_model.set_baked_rect(Rectangle2(rect.pos + Vector2(1, 0).mul_comp(rect.size) * 0.15, rect.size * 0.8))
+        self.sprite_model.set_baked_rect(Rectangle2(
+            rect.pos + rect.size.mul_comp(Vector2(0, 1)) * 0.6, 
+            Vector2(rect.size.x, rect.size.y * 0.4)))
 
     def set_count(self, count):
         s = str(count)
         if count == 0:
-            s = ' '
+            s = 'X'
         self.label_model.set_text(s)
 
     def render(self, button):
-        #g.affiche_rectangle(
+        #g.affiche_rectangle( # DEBUG RECT
         #    self.baked_rect.pos.to_tuple(), 
         #    (self.baked_rect.pos + self.baked_rect.size).to_tuple(),
         #    self.color.to_tuple_rgb())
