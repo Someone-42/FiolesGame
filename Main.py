@@ -6,8 +6,10 @@ from Parser import *
 
 levels = Parser("./Content/Levels1.txt")
 
+level = 1
+
 game = Game()
-game.vials = levels.load_level(1)
+game.vials = levels.load_level(level)
 
 def run():
     start(1200,900,"glass")
@@ -22,6 +24,9 @@ def run():
             break
         elif i[0] == UserInputType.UNDO:
             game.undo_move()
+        elif i[0] == UserInputType.RELOAD:
+            game.vials = levels.load_level(level)
+            game.moves.clear()
     print('adios amigos hehe')
         
 if __name__ == "__main__":
