@@ -14,10 +14,10 @@ class ButtonModel:
     def set_baked_rect(self, rect):
         self.baked_rect = rect
 
-class QuitButtonModel(ButtonModel):
+class SpriteButtonModel(ButtonModel):
     __slots__ = ("sprite_model")
-    def __init__(self):
-        self.sprite_model = SpriteModel("./Assets/Images/QuitGame.png", Vector2(512, 512), SpriteFitMode.FIT)
+    def __init__(self, sprite_model):
+        self.sprite_model = sprite_model
         super().__init__()
 
     def set_baked_rect(self, rect): 

@@ -242,3 +242,4 @@ class InputType(Enum):
     UNDO = -1
     MOVE = 0
     QUIT = 1
+    RELOAD = 2

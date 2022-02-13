@@ -68,7 +68,7 @@ def _bake():
     __VIAL_RECT_PX = vials_rect_px
     __UI_RECT_PX = ui_rect_px
 
-    buttons = [__RENDER_SETTINGS.quit_button, __RENDER_SETTINGS.undo_button]
+    buttons = [__RENDER_SETTINGS.quit_button, __RENDER_SETTINGS.undo_button, __RENDER_SETTINGS.reload_button]
 
     for i, button in enumerate(buttons):
         button.model.set_baked_rect(
