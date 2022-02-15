@@ -23,12 +23,14 @@ class Vial:
         return self.top == -1
 
     def pop(self):
+        """pop top value"""
         value = self.content[self.top]
         self.content[self.top] = 0
         self.top -= 1
         return value
 
     def push(self, value):
+        """push value at the top of the vial"""
         self.top += 1
         self.content[self.top] = value
         

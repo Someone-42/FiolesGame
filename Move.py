@@ -3,4 +3,5 @@ class Move():
         self.vial1, self.vial2, self.quantity = vial1, vial2, quantity
 
     def undo(self):
+        """undo last move"""
         self.vial2.force_move(self.vial1, self.quantity)
