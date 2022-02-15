@@ -12,7 +12,7 @@ game = Game()
 game.vials = levels.load_level(level)
 
 def run():
-    start(1200,900,"glass")
+    start(1200, 900, "Fioles Game 1.0")
     load_game(game)
     while not game.is_finished():
         display_game(game)  
@@ -27,7 +27,7 @@ def run():
         elif i[0] == UserInputType.RELOAD:
             game.vials = levels.load_level(level)
             game.moves.clear()
-    print('adios amigos hehe')
+    print('You won')
         
 if __name__ == "__main__":
     run()
