@@ -1,33 +1,34 @@
 from Game import *
-from UI import *
 from Stack import *
-from Vials import *
+from Vial import *
 from Parser import *
-
-levels = Parser("./Content/Levels1.txt")
-
-level = 1
-
-game = Game()
-game.vials = levels.load_level(level)
+import UI as ui
 
 def run():
-    start(1200, 900, "Fioles Game 1.0")
-    load_game(game)
+    levels = Parser("./Content/Levels1.txt")
+
+    level = 1 # The level we want to load
+
+    game = Game()
+    game.vials = levels.load_level(level)
+
+    ui.start(1200, 900, "Fioles Game 1.0")
+    ui.load_game(game)
+
     while not game.is_finished():
-        display_game(game)  
-        i = poll_input(game)
-        if i[0] == UserInputType.MOVE:
+        ui.display_game(game)
+        i = ui.poll_input(game)
+        if i[0] == ui.UserInputType.MOVE:
             if not game.try_move(i[1], i[2]):
-                show_invalid_move()
-        elif i[0] == UserInputType.QUIT:
+                ui.show_invalid_move()
+        elif i[0] == ui.UserInputType.QUIT:
             break
-        elif i[0] == UserInputType.UNDO:
+        elif i[0] == ui.UserInputType.UNDO:
             game.undo_move()
-        elif i[0] == UserInputType.RELOAD:
+        elif i[0] == ui.UserInputType.RELOAD:
             game.vials = levels.load_level(level)
             game.moves.clear()
-    print('You won')
+    print("You won (if you didn't quit)") # No ui for winning yet (No menus)
         
 if __name__ == "__main__":
     run()
