@@ -1,4 +1,4 @@
-import Vials
+import Vial
 
 class Parser:
     def __init__(self, file_path):
@@ -9,7 +9,7 @@ class Parser:
         pass
 
     def load_level(self, index: int) -> list:
-        """ Loads the level according to the index (list of vials)"""
+        """ Loads the level according to the index (list of vials) """
         file = open(self.file_path, "r")
         lines = file.readlines()
         file.close()
@@ -19,7 +19,7 @@ class Parser:
             level = self._read_to_list(lines[index])
             level_vials = []
             for colors in level:
-                vial = Vials.Vial(len(colors))
+                vial = Vial.Vial(len(colors))
                 vial.push_content(colors)
                 level_vials.append(vial)
             return level_vials
